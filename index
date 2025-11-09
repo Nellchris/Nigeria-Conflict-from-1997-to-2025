@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Nigeria Conflict StoryMap (1997 - 2025)</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/scrollama"></script>
+
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    color: #f5efef;
+    text-align: justify;
+  }
+
+  p {
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  /* Two Column Layout */
+  .container {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+  }
+
+  #map {
+    width: 100%;
+    height: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  #story {
+    padding: 60px 40px;
+    overflow-y: scroll;
+    height: 100vh;
+    box-sizing: border-box;
+    background: rgb(58, 57, 57);
+  }
+
+  section {
+    margin-bottom: 80vh;
+  }
+
+  h2, h1 {
+    margin-top: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .legend {
+    background: rgb(0, 0, 0);
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    line-height: 18px;
+    border: 1px solid #999;
+  }
+
+  .leaflet-interactive {
+    transition: fill-opacity 1s ease, fill 1s ease, stroke 0.8s ease;
+  }
+
+  .region-label {
+    font-weight: bold;
+    color: #111111;
+    background: rgba(255,255,255,0.7);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    pointer-events: none;
+  }
+
+  .region-img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-top: 15px;
+    box-shadow: 0 2px 6px #ffff;
+  }
+
+  .region-figure {
+    margin: 20px 0;
+    text-align: center;
+    color: #ddd;
+    font-size: 14px;
+  }
+  .region-figure figcaption {
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div id="map"></div>
+
+  <div id="story">
+
+    <section>
+      <h1>Conflict Patterns and Security Dynamics in Nigeria (1997 - 2025)</h1>
+      <p>Across Nigeria, patterns of violence have unfolded differently from region to region.
+        While the causes vary, ranging from; insurgency to communal clashes, banditry, militancy,
+        and protest confrontations, the human cost is shared. When we look across the regions, 
+        we see different stories, but the same shared consequence: lives interrupted and communities changed.
+        The data highlights how these impacts have concentrated differently across Nigeria's geopolitical regions.</p>
+      <p><b><i>This storymap examines spatial patterns of conflict events and fatalities using ACLED data aggregated at the 
+        state level.</b></i></p>
+      
+      <figure class="region-figure">
+          <img src="https://github.com/Nellchris/Nigeria-Conflict-from-1997-to-2025/raw/main/images/Introduction.jpg" alt="Nigeria Conflict Introduction" class="region-img" />
+          <figcaption>Independence Day morning, capturing the essence of sovereignty, cultural pride, and collective strength </figcaption>
+      </figure>
+      
+    </section>
+
+    <section data-region="north_central">
+      <h2>North Central Region</h2>
+      <p>(Benue, Plateau, Nasarawa, Niger, Kogi, Kwara, Abuja FCT)<br><br>
+        This region registers 8,704 conflict events resulting in 24,134 fatalities. The dominant pattern here is
+        Violence Against Civilians, driven largely by farmer-herder tensions, land resource disputes, communal boundary
+        conflicts, and cycles of reprisal attacks. States such as: Plateau, Benue, and Nasarawa are severe hotspots, where
+        land fragmentation, cattle migration corridors, and weak dispute-resolution institutions intensify violence.
+        The region's conflicts are highly localized and communal, also often driven by insurgency. 
+        The region illustrates how environmental stress, identity, and territory can collide in ways that become deadly.</p>
+      
+      <figure class="region-figure">
+          <img src="https://github.com/Nellchris/Nigeria-Conflict-from-1997-to-2025/raw/main/images/North-Central.jpg" alt="North Central Region Conflict" class="region-img" />
+          <figcaption>Whole towns and villages have been destroyed in the conflict (BBC news Updates, May 2016)</figcaption>
+      </figure>
+    </section>
+
+    <section data-region="north_east">
+      <h2>North East Region</h2>
+      <p>(Borno, Yobe, Adamawa, Bauchi, Taraba, Gombe)<br><br>
+        This region records the highest conflict burden in the country, with 9,173 events and 56,290 fatalities.
+        Battles are the dominant event type due to the prolonged Boko Haram and ISWAP insurgency, especially centered
+        in Borno and surrounding border regions. Conflict dynamics here reflect territorial contestation, asymmetric
+        warfare, and military counter-insurgency campaigns. The violence is ideological and militarized, producing
+        long-term displacement and humanitarian crisis conditions. This region's story is one of direct confrontation, 
+        where towns became frontlines and survival became a daily negotiation. The devastation has reshaped livelihoods, 
+        movement, education, and the very idea of home.</p>
+      
+      <figure class="region-figure">
+        <img src="https://github.com/Nellchris/Nigeria-Conflict-from-1997-to-2025/raw/main/images/North-East.jpg" alt="North East Region Conflict" class="region-img" />
+        <figcaption>Children play in a small river created by heavy rains, next to the area where latrines are constructed inside a camp for internally displaced people 
+          in Pulka town, northeast Nigeria. May, 2018. © Igor Barbero/MSF</figcaption>
+      </figure>
+    </section>
+
+    <section data-region="north_west">
+      <h2>North West Region</h2>
+      <p>(Zamfara, Kaduna, Katsina, Sokoto, Kebbi, Kano, Jigawa)<br><br>
+        The North West accounts for 8,746 events and 31,976 fatalities, with Violence Against Civilians being the most
+        prevalent. The region is marked by banditry, mass kidnapping, rural terror networks, cattle rustling economies,
+        and informal armed militias, particularly concentrated in Zamfara, Kaduna, and Katsina. Unlike the North East,
+        the violence here is not driven by ideology, but by criminal economies and rural governance breakdown. 
+        Here, The insecurity is diffuse — harder to predict, harder to contain.</p>
+      
+      <figure class="region-figure">
+        <img src="https://github.com/Nellchris/Nigeria-Conflict-from-1997-to-2025/raw/main/images/North-West.jpg" alt="North West Region Conflict" class="region-img" />
+        <figcaption>The Other Insurgency: Northwest Nigeria's Worsening Bandit Crisis by James Barnett and Murtala Rufai November 2021</figcaption>
+      </figure>
+    </section>
+
+    <section data-region="south_west">
+      <h2>South West Region</h2>
+      <p>(Lagos, Oyo, Osun, Ogun, Ondo, Ekiti)<br><br>
+        The South West accounts for 6,215 events but a comparatively lower fatality impact of 4,435. Here, Protests are
+        the dominant event type, reflecting urban political mobilization, including #EndSARS in 2020, civic activism, student
+        movements, and labor actions. Conflict tends to be episodic and city-centered, rather than rural or insurgent, 
+        reflecting the pressures of governance, inequality, and civic expression in major cities.</p>
+      
+      <figure class="region-figure">
+        <img src="https://github.com/Nellchris/Nigeria-Conflict-from-1997-to-2025/raw/main/images/South-West.jpg" alt="South West Region Conflict" class="region-img" />
+        <figcaption>People protest against hunger and economic hardships on the street in Lagos, Nigeria, on Friday, August 2024. (Sunday Alamba / Associated Press)</figcaption>
+      </figure>
+    </section>
+
+    <section data-region="south_south">
+      <h2>South South Region</h2>
+      <p>(Rivers, Bayelsa, Delta, Akwa Ibom, Cross River, Edo)<br><br>
+        With 6,818 events and 9,434 fatalities, the South South's conflicts are tied to resource control disputes, oil bunkering,
+        militant operations, and environmental justice struggles. The violence is economic and extractive in nature, linked to oil
+        infrastructure sabotage, armed revenue groups, and historical grievances over marginalization. 
+        Generally, this region's conflict dynamics are deeply tied to the struggle over resource control, 
+        where economic grievances turn into armed expressions of resistance and retaliation</p>
+
+      <figure class="region-figure">
+        <img src="https://github.com/Nellchris/Nigeria-Conflict-from-1997-to-2025/raw/main/images/South-South.jpeg" alt="South South Region Conflict" class="region-img" />
+        <figcaption>Oil resource rich countries experience varying degrees of resource conflicts. Here, a tanker truck with stolen refined petroleum product was set ablaze in Rivers State, 
+          Nigeria (29 January 2022). PHOTO: REUTERS/AFOLABI SOTUNDE</figcaption>
+      </figure>
+    </section>
+
+    <section data-region="south_east">
+      <h2>South East Region</h2>
+      <p>(Anambra, Imo, Ebonyi, Enugu, Abia)<br><br>
+        The South East records 4,250 events and 5,389 fatalities, with Violence Against Civilians as the leading event type.
+        Conflict patterns are linked to secessionist agitation, localized enforcement of “sit-at-home” directives, and confrontations
+        between pro-Biafra groups and security forces. Attacks on public institutions, market centers, and political actors highlight
+        the region's identity-driven and state legitimacy conflicts. Lastly, Security operations, political agitation, and retaliatory attacks have 
+        shaped a cycle of fear, statements, and counter-statements in this region.</p>
+
+      <figure class="region-figure">
+        <img src="https://github.com/Nellchris/Nigeria-Conflict-from-1997-to-2025/raw/main/images/South-East.jpeg" alt="South East Region Conflict" class="region-img" />
+        <figcaption>Part of the Owerri prison in Imo state attacked on April 4, 2021 and 1,844 inmates released. FILE PHOTO | NIGERIA CORRECTIONAL SERVICES</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>Conclusion</h2>
+      <p>Conflict in Nigeria is not one story, it is many. Nigeria's security challenges are diverse, layered, and regionally distinct. 
+        Each region experiences violence differently, shaped by its own history, economy, and social identity. The tragedy is shared, 
+        but the drivers and experiences are not uniform. Understanding these regional patterns is essential, not only for recounting what 
+        has happened, but for shaping targeted, context-aware responses that support peace, resilience, and community rebuilding.</p>
+      
+      <figure class="region-figure">
+          <img src="https://github.com/Nellchris/Nigeria-Conflict-from-1997-to-2025/raw/main/images/Conclusion.jpeg" alt="Conclusion" class="region-img" />
+          <figcaption>Photo of the Nigerian Army</figcaption>
+      </figure>
+    </section>
+
+  </div>
+</div>
+
+<script>
+const regions = {
+  north_central: ["Benue","Kogi","Kwara","Nasarawa","Niger","Plateau","Abuja FCT"],
+  north_east: ["Adamawa","Bauchi","Borno","Gombe","Taraba","Yobe"],
+  north_west: ["Jigawa","Kaduna","Kano","Katsina","Kebbi","Sokoto","Zamfara"],
+  south_east: ["Abia","Anambra","Ebonyi","Enugu","Imo"],
+  south_south: ["Akwa Ibom","Bayelsa","Cross River","Delta","Edo","Rivers"],
+  south_west: ["Ekiti","Lagos","Ogun","Ondo","Osun","Oyo"]
+};
+
+var map = L.map('map').setView([9.5, 8.0], 6);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
+let stateLayer;
+let labelsLayer = L.layerGroup().addTo(map);
+
+// Styles
+function baseStyle() { return { color: "#777", weight: 1, fillOpacity: 0.25 }; }
+function highlightStyle() { return { color: "#b30000", weight: 2, fillColor: "#ff6666", fillOpacity: 0.75 }; }
+
+fetch("https://raw.githubusercontent.com/Nellchris/Nigeria-Conflict-from-1997-to-2025/refs/heads/main/State_EF.geojson")
+  .then(res => res.json())
+  .then(data => {
+    stateLayer = L.geoJson(data, {
+      style: baseStyle,
+      onEachFeature: (feature, layer) =>
+        layer.bindTooltip(`<b>${feature.properties.STATE}</b><br>Events: ${feature.properties.EVENTS}<br>Fatalities: ${feature.properties.FATALITIES}`)
+    }).addTo(map);
+
+    setupScroll();
+    addLegend();
+  });
+
+// Focus Region with animated labels
+function focusRegion(regionKey) {
+  labelsLayer.clearLayers();
+  stateLayer.setStyle(f => regions[regionKey]?.includes(f.properties.STATE) ? highlightStyle() : baseStyle());
+
+  const selected = [];
+  stateLayer.eachLayer(l => {
+    if (regions[regionKey]?.includes(l.feature.properties.STATE)) {
+      selected.push(l);
+
+      // Add label at centroid
+      const centroid = l.getBounds().getCenter();
+      L.marker(centroid, {
+        icon: L.divIcon({
+          className: 'region-label',
+          html: `<b>${l.feature.properties.STATE}</b>`,
+          iconSize: [100, 20]
+        })
+      }).addTo(labelsLayer);
+    }
+  });
+
+  if (selected.length) map.flyToBounds(L.featureGroup(selected).getBounds(), { padding: [50,50], duration: 2 });
+}
+
+// Choropleth for fatalities with smooth fade
+function getColor(fatalities) {
+  return fatalities > 40000 ? '#800026' :
+         fatalities > 10000  ? '#BD0026' :
+         fatalities > 5000  ? '#E31A1C' :
+         fatalities > 2000  ? '#FC4E2A' :
+         fatalities > 1000   ? '#FD8D3C' :
+         fatalities > 500   ? '#FEB24C' :
+                             '#FFEDA0';
+}
+
+let choroplethLegend;
+
+// Create legend (once)
+function createChoroplethLegend() {
+  if (!choroplethLegend) {
+    choroplethLegend = L.control({ position: "bottomright" });
+    choroplethLegend.onAdd = () => {
+      const div = L.DomUtil.create("div", "legend");
+      div.style.opacity = 0; // start hidden
+      div.style.transition = "opacity 1s ease";
+      div.innerHTML = `
+        <b>Fatalities</b><br>
+        <i style="background:#800026;width:14px;height:14px;display:inline-block;border:1px solid #555;"></i> >40000<br>
+        <i style="background:#BD0026;width:14px;height:14px;display:inline-block;border:1px solid #555;"></i> 10000-40000<br>
+        <i style="background:#E31A1C;width:14px;height:14px;display:inline-block;border:1px solid #555;"></i> 5000-10000<br>
+        <i style="background:#FC4E2A;width:14px;height:14px;display:inline-block;border:1px solid #555;"></i> 2000-5000<br>
+        <i style="background:#FD8D3C;width:14px;height:14px;display:inline-block;border:1px solid #555;"></i> 1000-2000<br>
+        <i style="background:#FEB24C;width:14px;height:14px;display:inline-block;border:1px solid #555;"></i> 500-1000<br>
+        <i style="background:#FFEDA0;width:14px;height:14px;display:inline-block;border:1px solid #555;"></i> 0-500
+      `;
+      return div;
+    };
+  }
+}
+
+// Show choropleth with smooth fade-in
+function showChoropleth() {
+  stateLayer.eachLayer(layer => {
+    layer.setStyle({
+      fillColor: getColor(layer.feature.properties.FATALITIES),
+      fillOpacity: 0,
+      color: "#555",
+      weight: 1
+    });
+    // Fade in after a tiny delay
+    setTimeout(() => layer.setStyle({ fillOpacity: 0.7 }), 100);
+  });
+
+  createChoroplethLegend();
+  choroplethLegend.addTo(map);
+  setTimeout(() => choroplethLegend.getContainer().style.opacity = 1, 100);
+}
+
+// Hide choropleth with smooth fade-out
+function hideChoropleth() {
+  stateLayer.eachLayer(layer => layer.setStyle({ fillOpacity: 0 }));
+  if (choroplethLegend) choroplethLegend.getContainer().style.opacity = 0;
+
+  // After fade-out delay, reset to base style and remove legend
+  setTimeout(() => {
+    stateLayer.eachLayer(layer => layer.setStyle(baseStyle()));
+    if (choroplethLegend) map.removeControl(choroplethLegend);
+  }, 1000); // delay matches CSS transition
+}
+
+// Scrollama setup for Conclusion section
+function setupScroll() {
+  const scroller = scrollama();
+  scroller.setup({ step: "#story section", offset: 0.6 })
+    .onStepEnter(e => {
+      const region = e.element.dataset.region;
+      const heading = e.element.querySelector('h2')?.innerText;
+
+      if (region) {
+        labelsLayer.clearLayers();
+        hideChoropleth(); // fade out if scrolling away from conclusion
+        focusRegion(region);
+      } else if (heading === "Conclusion") {
+        labelsLayer.clearLayers();
+        showChoropleth(); // fade in choropleth and legend
+        map.fitBounds(stateLayer.getBounds(), { padding: [50,50] });
+      }
+    })
+    .onStepExit(e => {
+      const heading = e.element.querySelector('h2')?.innerText;
+      if (heading === "Conclusion") {
+        hideChoropleth(); // fade out with delay
+      }
+    });
+}
+
+
+</script>
+
+</body>
+</html>
